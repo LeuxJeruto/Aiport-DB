@@ -14,13 +14,13 @@ class FlightTestCase(TestCase):
         a2 = Airport.objects.create(code="BBB", city="City B")
 
         #create flights.
-        Flights.objects.create(origin=a1, destination=a2, duration=100)
-        Flights.objects.create(origin=a1, destination=a1, duration=200)
-        Flights.objects.create(origin=a1, destination=a2, duration=-100)
+        Flight.objects.create(origin=a1, destination=a2, duration=100)
+        Flight.objects.create(origin=a1, destination=a1, duration=200)
+        Flight.objects.create(origin=a1, destination=a2, duration=-100)
 
     def test_departures_count(self):
         a = Airport.objects.get(code="AAA")
-        self.assertEqual(a.depatures.count(), 3)
+        self.assertEqual(a.departures.count(), 3)
     
     def test_arrivals_count(self):
         a = Airport.objects.get(code="AAA")
@@ -28,18 +28,18 @@ class FlightTestCase(TestCase):
 
     def test_valid_flight(self):
         a1 = Airport.objects.get(code="AAA")
-        a2 = Aiport.objects.gt(code="BBB")
-        f = flights.objects.get(origin=a1, destination=a2, duration=100)
+        a2 = Airport.objects.get(code="BBB")
+        f = Flight.objects.get(origin=a1, destination=a2, duration=100)
         self.assertTrue(f.is_valid_flight())
         
     def test_invalid_flight_destinaton(self):
-        a1 = Aiport.objects.get(code="AAA")
+        a1 = Airport.objects.get(code="AAA")
         f = Flight.objects.get(origin=a1, destination=a1)
         self.assertFalse(f.is_valid_flight())
 
     def test_invalid_flight_duration(self):
-        a1 = Aiport.objects.get(code="AAA")
-        a2 = Aiport.objects.get(code="BBB")
+        a1 = Airport.objects.get(code="AAA")
+        a2 = Airport.objects.get(code="BBB")
         f = Flight.objects.get(origin=a1, destination=a2, duration=-100)
         self.assertFalse(f.is_valid_flight())
       
